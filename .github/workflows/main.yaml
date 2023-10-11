@@ -26,7 +26,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           email: auto
-          build-args: "APP_VERSION=v1 APP_PICTURE=blue.jpg"
+          build-args: "APP_VERSION=blue APP_PICTURE=blue.jpg"
           additional-tags: "blue"
           auto-tags: branch-name
       - name: publish-green
@@ -34,7 +34,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           email: auto
-          build-args: "APP_VERSION=v1 APP_PICTURE=green.jpg"
+          build-args: "APP_VERSION=green APP_PICTURE=green.jpg"
           additional-tags: "green"
           auto-tags: branch-name
       - name: publish-canary
@@ -42,6 +42,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           email: auto
-          build-args: "APP_VERSION=v1 APP_PICTURE=canary.jpg"
+          build-args: "APP_VERSION=canary APP_PICTURE=canary.jpg"
           additional-tags: "canary"
           auto-tags: branch-name
