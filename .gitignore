@@ -1,0 +1,47 @@
+.vs
+.env
+.env.*
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+/coverage
+/build/
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+*.code-workspace
+
+# misc
+.angulardoc.json
+.cache/
+.DS_Store
+*.swp
+*.log
+test
+temp/
+target/
+.npm
+*.bak
+kuba.conf
+upload.txt
+.bash_history
+.config
+.node-gyp
