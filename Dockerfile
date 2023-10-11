@@ -8,8 +8,7 @@ COPY src/images input/
 
 ARG APP_VERSION
 
-RUN cd /tmp && \
-    mkdir output && \
+RUN mkdir output && \
     apk --no-cache add imagemagick ghostscript-fonts && \
     convert -size 300x50 xc:none -pointsize 20 -gravity center -draw "fill white text 1,1 'Version $APP_VERSION' text 0,0 'Version $APP_VERSION' fill black text -1,-1 'Version $APP_VERSION' " WATERMARK_FILE.png && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/standard.jpg output/standard.jpg && \
