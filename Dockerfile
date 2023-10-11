@@ -1,4 +1,4 @@
-FROM node:20.3.1-alpine3.18 as builder
+FROM node:20.8.0-alpine3.18 as builder
 
 WORKDIR /convert
 
@@ -17,7 +17,7 @@ RUN cd /tmp && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/green.jpg output/green.jpg && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/canary.jpg output/canary.jpg
 
-FROM node:20.3.1-alpine3.18 as runtime
+FROM node:20.8.0-alpine3.18 as runtime
 
 WORKDIR /app
 
