@@ -11,7 +11,9 @@ ARG APP_VERSION
 RUN mkdir output && \
     apk --no-cache add bash curl imagemagick ghostscript-fonts && \
     convert -size 300x50 xc:none -pointsize 30 -gravity center -draw "fill white text 1,1 'Version $APP_VERSION' text 0,0 'Version $APP_VERSION' fill black text -1,-1 'Version $APP_VERSION' " WATERMARK_FILE.png && \
-    composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/standard.jpg output/standard.jpg && \
+    composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/v1.jpg output/v1.jpg && \
+    composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/v2.jpg output/v2.jpg && \
+    composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/v3.jpg output/v3.jpg && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/blue.jpg output/blue.jpg && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/green.jpg output/green.jpg && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/canary.jpg output/canary.jpg
