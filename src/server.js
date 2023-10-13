@@ -1,13 +1,16 @@
 /* eslint-disable no-console */
 const express = require('express');
+const { ReasonPhrases, StatusCodes } = require('http-status-codes');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const APP_VERSION = process.env.APP_VERSION || 'unknown';
-const APP_PICTURE = process.env.APP_PICTURE || 'standard.jpg';
+const APP_VERSION = process.env.APP_VERSION || 'v1';
+const APP_PICTURE = process.env.APP_PICTURE || 'v1.jpg';
 
 const host = process.env.HOSTNAME || 'localhost';
+const PATH_BASE = '/';
+const PATH_STATE = '/state';
 const PATH_READY = '/ready';
 const PATH_HEALTH = '/health';
 const PATH_ERROR = '/error';
@@ -17,70 +20,90 @@ let totalRequests = 0;
 let readyState = true;
 let healthState = true;
 
-const createResponse = (path, method = 'GET') => {
-  console.log(`Host: ${host} | Path: ${path} | Version: ${APP_VERSION} | Total Requests: ${totalRequests} | Health: ${healthState} | Ready: ${readyState} | App Uptime: ${(new Date() - startTime)/1000} seconds | Log Time: ${new Date()}`);
+const createResponse = (endpoint, method = 'GET') => {
+  console.log(`Host: ${host} | Path: ${endpoint} | Version: ${APP_VERSION} | Total Requests: ${totalRequests} | Ready: ${readyState} | Health: ${healthState} | App Uptime: ${(new Date() - startTime)/1000} seconds | Log Time: ${new Date()}`);
   return {
     host,
     method,
-    path,
+    path: endpoint,
     version: APP_VERSION,
     totalRequests,
-    health: healthState,
-    ready: readyState
+    readyState,
+    healthState
   }
 }
 
 app.use(express.json());
 
-app.get('/', (_req, res) => {
+// Return the image for the app
+app.get(PATH_BASE, (_, res) => {
   if (!healthState) {
-    return res.status(500).send({status: "Internal Server Error"})
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({status: ReasonPhrases.INTERNAL_SERVER_ERROR})
+  } else if (!readyState) {
+    res.status(StatusCodes.SERVICE_UNAVAILABLE).send({status: ReasonPhrases.SERVICE_UNAVAILABLE})
+  } else {
+    totalRequests += 1;
+    createResponse(PATH_BASE)
+
+    const imagePath = path.join(__dirname, 'images', APP_PICTURE);
+    res.sendFile(imagePath);
   }
-  if (!readyState) {
-    return res.status(503).send({status: "Service Unavailable"})
-  }
-  totalRequests += 1;
-  res.send(createResponse('/'))
 });
 
-app.get('/image', (req, res) => {
-  const imagePath = path.join(__dirname, 'images', APP_PICTURE);
-  res.sendFile(imagePath);
+// Return the state of the app
+app.get(PATH_STATE, (_, res) => {
+  if (!healthState) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({status: ReasonPhrases.INTERNAL_SERVER_ERROR})
+  } else if (!readyState) {
+    res.status(StatusCodes.SERVICE_UNAVAILABLE).send({status: ReasonPhrases.SERVICE_UNAVAILABLE})
+  } else {
+    totalRequests += 1;
+    res.send(createResponse(PATH_STATE))
+  }
 });
 
+// Endpoint for a readinessProbe
 app.get(PATH_READY, (_, res) => {
-  const statusCode = readyState ? 200 : 503;
-  res.status(statusCode).send({ready: readyState, statusCode: statusCode});
+  const statusCode = readyState ? StatusCodes.OK : StatusCodes.SERVICE_UNAVAILABLE;
+  res.status(statusCode).send({state: readyState});
 });
 
-app.post(PATH_READY, (_, res) => {
-  readyState = true;
-  res.send(createResponse(PATH_READY, 'POST'))
+// Endpoint to set the ready state
+app.put(PATH_READY, (req, res) => {
+  const {state} = req.body;
+  if (state === undefined) {
+    console.log(`Host: ${host} | Path: ${PATH_READY} | Method: PUT | Value for 'state' missing in body | Log Time: ${new Date()}`);
+    res.sendStatus(StatusCodes.BAD_REQUEST);
+    return
+  }
+
+  readyState = state;
+  res.send(createResponse(PATH_READY, 'PUT'))
 })
 
-app.delete(PATH_READY, (_, res) => {
-  readyState = false;
-  res.send(createResponse(PATH_READY, 'DELETE'))
-})
-
+// Endpoint for a livenessProbe
 app.get(PATH_HEALTH, (_, res) => {
-  const statusCode = healthState ? 200 : 500;
-  res.status(statusCode).send({health: healthState, statusCode: statusCode});
+  const statusCode = healthState ? StatusCodes.OK : StatusCodes.INTERNAL_SERVER_ERROR;
+  res.status(statusCode).send({state: healthState});
 });
 
-app.post(PATH_HEALTH, (_, res) => {
-  healthState = true;
-  res.send(createResponse(PATH_HEALTH, 'POST'))
+// Endpoint to set the health state
+app.put(PATH_HEALTH, (req, res) => {
+  const {state} = req.body;
+  if (state === undefined) {
+    console.log(`Host: ${host} | Path: ${PATH_HEALTH} | Method: PUT | Value for 'state' missing in body | Log Time: ${new Date()}`);
+    res.sendStatus(StatusCodes.BAD_REQUEST);
+    return
+  }
+
+  healthState = state;
+  res.send(createResponse(PATH_HEALTH, 'PUT'))
 });
 
-app.delete(PATH_HEALTH, (_, res) => {
-  healthState = false;
-  res.send(createResponse(PATH_HEALTH, 'DELETE'))
-});
-
+// Endpoint to crash the app
 app.get(PATH_ERROR, (_, res) => {
-  console.log(`Host: ${host} | Path: ${PATH_ERROR} | Total Requests: ${totalRequests} | Health: ${healthState} | Ready: ${readyState} | App Uptime: ${(new Date() - startTime)/1000} seconds | Log Time: ${new Date()}`);
-  res.status(503).send({status: "Unexpected Error Occurred"})
+  console.log(`Host: ${host} | Path: ${PATH_ERROR} | Total Requests: ${totalRequests} | Health State: ${healthState} | Ready State: ${readyState} | App Uptime: ${(new Date() - startTime)/1000} seconds | Log Time: ${new Date()}`);
+  res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({status: "Unexpected Error Occurred"})
   process.exit(1);
 });
 
