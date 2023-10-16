@@ -1,5 +1,20 @@
 # k8s-demo
-This repository contains a simple Node.js application that can be used to demonstrate the basic concepts of Kubernetes.
+This repository contains a simple Node.js application that can be used to demonstrate some basic concepts of Kubernetes.
+
+There are different versions of the application that can be used to demonstrate the following concepts:
+* Rolling Updates
+* Blue/Green Deployments
+* Canary Deployments
+
+For this purpose, there are several versions. The images have the version name as tag. Available are
+* v1
+* v2
+* v3
+* blue
+* green
+* canary
+
+The complete Image name is , e.g. `ghcr.io/stefan-niemeyer/k8s-demo/k8s-demo:v1`.
 
 # Endpoints
 | Method | Path            | Description                                                                                                                                                                |
@@ -39,6 +54,5 @@ $ curl -X PUT -H "Content-Type: application/json" -d '{"state": true}' -w " - > 
 
 # Source of the Photos
 * canary.jpg: [Jelle Taman](https://unsplash.com/@jelletaman?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/photos/60WkGpWyadY?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
-* blue.jpg [Marek Szturc](https://unsplash.com/@marxgall?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/photos/FhmJJuudRIM?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
- * green.jpg on [Pixabay](https://pixabay.com/photos/animal-cat-domestic-eye-eyes-face-17545/)
- * v1.jpg, v2.jpg, v3.jpg by [Stefan Niemeyer](https://github.com/stefan-niemeyer)
+* green.jpg on [Pixabay](https://pixabay.com/photos/animal-cat-domestic-eye-eyes-face-17545/)
+* blue.jpg, v1.jpg, v2.jpg, v3.jpg by [Stefan Niemeyer](https://github.com/stefan-niemeyer)
