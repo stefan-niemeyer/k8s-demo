@@ -26,7 +26,9 @@ WORKDIR /app
 
 RUN mkdir -p /home/node/.npm-global && \
     npm config set prefix '/home/node/.npm-global'  && \
-    export PATH=/home/node/.npm-global/bin:$PATH
+    export PATH=/home/node/.npm-global/bin:$PATH && \
+    mkdir -p /home/node/.npm && \
+    chown -R 65534:65534 '/home/node/.npm'
 
 ENV npm_config_cache=/home/node/.npm
 
