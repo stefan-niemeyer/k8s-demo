@@ -31,16 +31,18 @@ RUN mkdir -p /home/node/.npm-global && \
     chown -R 65534:65534 '/home/node/.npm'
 
 ENV npm_config_cache=/home/node/.npm
-USER 65534
 
 COPY package.json package-lock.json ./
 RUN npm install
-
 COPY src src/
+
 COPY --from=builder /convert/output/ src/images/
 
 EXPOSE 5000
 
+RUN chown -R 65534:65534 '/home/node/.npm'
+
+USER 65534
 
 ARG APP_VERSION
 ENV APP_VERSION=$APP_VERSION
