@@ -29,6 +29,14 @@ jobs:
           build-args: "APP_VERSION=v3 APP_PICTURE=v3.jpg"
           additional-tags: "v3"
           auto-tags: branch-name
+      - name: publish-experimental
+        uses: versicherungskammer/multi-platform-docker-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          email: auto
+          build-args: "APP_VERSION=v3 APP_PICTURE=v3.jpg UNSTABLE=30"
+          additional-tags: "experimental"
+          auto-tags: branch-name
       - name: publish-blue
         uses: versicherungskammer/multi-platform-docker-action@v1
         with:
