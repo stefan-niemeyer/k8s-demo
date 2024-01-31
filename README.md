@@ -25,7 +25,7 @@ The complete Image name is , e.g. `ghcr.io/stefan-niemeyer/k8s-demo/k8s-demo:v1`
 | PUT    | /ready/{state}  | Set the ready state with 'true' or 'false'                                                                                                                                 |
 | GET    | /health         | Get the health state. Can be used for a livenessProbe in Kubernetes.                                                                                                       |
 | PUT    | /health/{state} | Set the health state with 'true' or 'false'                                                                                                                                |
-| GET    | /error          | Causes a crash of the app.<br/>Can be used to show the restart of pods in Kubernetes.                                                                                      |
+| GET    | /crash          | Causes a crash of the app.<br/>Can be used to show the restart of pods in Kubernetes.                                                                                      |
 
 ## Example Calls
 

@@ -14,7 +14,7 @@ const PATH_BASE = '/';
 const PATH_STATE = '/state';
 const PATH_READY = '/ready';
 const PATH_HEALTH = '/health';
-const PATH_ERROR = '/error';
+const PATH_CRASH = '/crash';
 const startTime = new Date();
 
 let totalRequests = 0;
@@ -102,8 +102,8 @@ app.put(PATH_HEALTH, (req, res) => {
 });
 
 // Endpoint to crash the app
-app.get(PATH_ERROR, (_, res) => {
-  console.log(`Host: ${host} | Path: ${PATH_ERROR} | Total Requests: ${totalRequests} | Health State: ${healthState} | Ready State: ${readyState} | App Uptime: ${(new Date() - startTime)/1000} seconds | Log Time: ${new Date()}`);
+app.get(PATH_CRASH, (_, res) => {
+  console.log(`Host: ${host} | Path: ${PATH_CRASH} | Total Requests: ${totalRequests} | Health State: ${healthState} | Ready State: ${readyState} | App Uptime: ${(new Date() - startTime)/1000} seconds | Log Time: ${new Date()}`);
   res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({status: "Unexpected Error Occurred"})
   process.exit(1);
 });
