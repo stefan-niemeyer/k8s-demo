@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const APP_VERSION = process.env.APP_VERSION || 'v1';
 const APP_PICTURE = process.env.APP_PICTURE || 'v1.jpg';
-const UNSTABLE = process.env.UNSTABLE;
+const UNSTABLE = process.env.UNSTABLE || '';
 
 const host = process.env.HOSTNAME || 'localhost';
 const PATH_BASE = '/';
@@ -110,7 +110,7 @@ app.get(PATH_CRASH, (_, res) => {
 
 app.listen(PORT, () => console.log(`server: App listening on port ${PORT}!`));
 
-if (UNSTABLE !== undefined) {
+if (UNSTABLE !== '') {
   setTimeout(() => {
     console.log(`server: UNSTABLE=${UNSTABLE}s`);
     healthState = false;
