@@ -112,7 +112,7 @@ app.listen(PORT, () => console.log(`server: App listening on port ${PORT}!`));
 
 if (UNSTABLE !== undefined) {
   setTimeout(() => {
-    logger.info(`server: UNSTABLE=${UNSTABLE}s`);
+    console.log(`server: UNSTABLE=${UNSTABLE}s`);
     healthState = false;
   }, +UNSTABLE * 1000);
 }
