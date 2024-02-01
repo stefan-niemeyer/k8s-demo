@@ -13,6 +13,7 @@ For this purpose, there are several versions. The images have the version name a
 * blue
 * green
 * canary
+* experimental (set health automatically to false after 30s)
 
 The complete Image name is , e.g. `ghcr.io/stefan-niemeyer/k8s-demo/k8s-demo:v1`.
 
