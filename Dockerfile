@@ -9,7 +9,7 @@ COPY src/images input/
 ARG APP_VERSION
 
 RUN mkdir output && \
-    apk --no-cache add imagemagick ghostscript-fonts && \
+    apk --no-cache add libjpeg-turbo-dev imagemagick ghostscript-fonts && \
     magick -size 300x50 xc:none -pointsize 30 -gravity center -draw "fill white text 1,1 'Version $APP_VERSION' text 0,0 'Version $APP_VERSION' fill black text -1,-1 'Version $APP_VERSION' " WATERMARK_FILE.png && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/v1.jpg output/v1.jpg && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/v2.jpg output/v2.jpg && \
@@ -18,7 +18,7 @@ RUN mkdir output && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/green.jpg output/green.jpg && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/canary.jpg output/canary.jpg
 
-FROM node:20.11.0-alpine3.18 as runtime
+FROM node:22.14-alpine3.21 as runtime
 
 RUN apk --no-cache add bash curl
 
