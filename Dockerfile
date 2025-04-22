@@ -1,4 +1,4 @@
-FROM node:20.11.0-alpine3.18 as builder
+FROM node:22.14-alpine3.21 as builder
 
 WORKDIR /convert
 
