@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const express = require('express');
 const { STATUS_CODES } = require('http');
 const { status} = require('http-status');
