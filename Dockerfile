@@ -38,7 +38,7 @@ COPY src src/
 
 COPY --from=builder /convert/output/ src/images/
 
-EXPOSE 5000
+EXPOSE 3000
 
 RUN chown -R 65534:65534 '/home/node/.npm'
 
