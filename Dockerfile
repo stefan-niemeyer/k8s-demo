@@ -1,4 +1,4 @@
-FROM node:22.14-alpine3.21 as builder
+FROM node:25.2-alpine3.21 as builder
 
 WORKDIR /convert
 
@@ -18,7 +18,7 @@ RUN mkdir output && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/green.jpg output/green.jpg && \
     composite -dissolve 90% -gravity south-east WATERMARK_FILE.png input/canary.jpg output/canary.jpg
 
-FROM node:22.14-alpine3.21 as runtime
+FROM node:25.2-alpine3.21 as runtime
 
 RUN apk --no-cache add bash curl
 
