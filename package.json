@@ -14,7 +14,7 @@
   },
   "private": true,
   "dependencies": {
-    "body-parser": "2.2.1",
+    "body-parser": "2.2.2",
     "express": "^5.2.1",
     "http-status": "^2.1.0"
   },
