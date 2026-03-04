@@ -1,6 +1,6 @@
 {
   "name": "k8s-demo",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Demo application for Kubernetes",
   "main": "index.js",
   "license": "MIT",
@@ -9,22 +9,12 @@
     "url": "https://github.com/stefan-niemeyer/k8s-demo.git"
   },
   "scripts": {
-    "start": "node src/server.js",
-    "eslint": "eslint 'src/**/*.js'"
+    "start": "node src/server.js"
   },
   "private": true,
   "dependencies": {
-    "body-parser": "2.2.1",
+    "body-parser": "2.2.2",
     "express": "^5.2.1",
     "http-status": "^2.1.0"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
-    "@eslint/js": "^9.32.2",
-    "eslint": "^9.39.2",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.4",
-    "prettier": "^3.7.4"
   }
 }
